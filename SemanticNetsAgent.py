@@ -13,17 +13,17 @@ class SemanticNetsAgent:
         #If it is impossible to move the animals over according
         #to the rules of the problem, return an empty list of
         #moves.
-
+        count = 0
         start = (initial_sheep, initial_wolves, 0)
         end = (0,0,1)
 
         queue = [(start, [])]
         visited = set()
-
+        ans = []
         #bfs
         while queue:
-
-            cur, path = queue.pop()
+            cur, path = queue.pop(0)
+            #print(f'current path: {path}')
             if cur == end:
                 return path
             
@@ -34,6 +34,8 @@ class SemanticNetsAgent:
             for move in moves:
                 new_state = self.generate_state(sheep_left, wolves_left, boat, move)
                 if new_state not in visited and self.isValid(new_state, initial_sheep, initial_wolves):
+                    #print(f'New state: {new_state}')
+                    visited.add(new_state)
                     queue.append((new_state, path + [move]))
         return []
 
